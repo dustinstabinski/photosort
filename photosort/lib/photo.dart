@@ -7,6 +7,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:math';
+import './settings.dart';
 
 class Photo extends StatefulWidget {
   @override
@@ -15,18 +17,47 @@ class Photo extends StatefulWidget {
 
 class PhotoState extends State<Photo> {
   int _index = 0;
-  int _test = 1;
+  var _imageOn;
+  Set<String> _imagesSorted = {};
+  var _imageList;
+  final _random = new Random();
 
   @override
   void initState() {
     super.initState();
     _index = 0;
-    _test = 1;
+    _imageOn = null;
   }
 
+  void toSettings() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Settings'),
+        ),
+        body: Settings(),
+      );
+    }));
+  }
+
+  int nextImage(int max) {
+    int nextIndex = -1;
+    if (_imageList.length != _imagesSorted.length) {
+      while (
+          nextIndex == -1 || _imagesSorted.contains(_imageList[nextIndex].id)) {
+        nextIndex = 0 + _random.nextInt(max - 0);
+      }
+    }
+
+    return nextIndex;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("PhotoSort")),
+        appBar: AppBar(title: Text("PhotoSort"), actions: <Widget>[
+          IconButton(onPressed: toSettings, icon: Icon(Icons.settings))
+        ]),
         body: FutureBuilder<bool>(
           future: _requestPermission(Permission.photos),
           builder: (context, snapshot) {
@@ -37,23 +68,34 @@ class PhotoState extends State<Photo> {
             return Text("Not Authorized");
           },
         ),
-        persistentFooterButtons: _displayButtons());
+        persistentFooterButtons: [_displayButtons()]);
   }
 
-  List<Widget> _displayButtons() {
+  Widget _displayButtons() {
     final ButtonStyle style =
         TextButton.styleFrom(textStyle: const TextStyle(fontSize: 50));
     final keepButton = ElevatedButton(
-        onPressed: () => setState(() {
-              _index++;
-            }),
+        onPressed: () => {
+              setState(() {
+                _index = nextImage(_imageList.length);
+                _imagesSorted.add(_imageOn.id);
+              })
+            },
         style: style,
         child: const Text('Keep'));
 
     final deleteButton = ElevatedButton(
-        onPressed: () => setState(() {
-              _index++;
-            }),
+        onPressed: () => {
+              PhotoManager.editor
+                  .deleteWithIds([_imageOn.id]).whenComplete(() => setState(() {
+                        if (_imageList.length > 0) {
+                          // HANDLE DELETE
+
+                        }
+
+                        _index = nextImage(_imageList.length);
+                      })),
+            },
         style: style,
         child: const Text('Delete'));
 
@@ -61,34 +103,56 @@ class PhotoState extends State<Photo> {
 
     l.add(deleteButton);
     l.add(keepButton);
-
-    return l;
+    return Container(
+        child: Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [Expanded(child: deleteButton), Expanded(child: keepButton)],
+    ));
   }
 
   FutureBuilder<Widget> _displayPhotoBuilder() {
     return FutureBuilder<Widget>(
         future: _displayPhoto(),
         builder: (context, snapshot) {
-          return snapshot.data ?? Text("Loading");
+          return snapshot.data ?? CircularProgressIndicator();
         });
   }
 
   Future<Widget> _displayPhoto() async {
-    List<AssetPathEntity> list = await PhotoManager.getAssetPathList();
-    // TODO: Verify that index 0 is Recents
-    List<AssetEntity> imageList = await list[0].assetList;
-    if (_index < imageList.length) {
-      AssetEntity image = imageList[_index];
-      File imageFile = (await image.file)!;
-      return GestureDetector(
-          onTap: () => setState(() {
-                _index++;
-              }),
-          child: Image.file(imageFile));
-    } else {
+    if (!(_imageList is List)) {
+      var list = await PhotoManager.getAssetPathList();
+      List<AssetEntity> imageList = await list[0].assetList;
       setState(() {
-        _index = 0;
+        _imageList = imageList;
       });
+      return CircularProgressIndicator();
+    }
+    if (_imageList.length == 0 || _index == -1) {
+      return Text("No photos found");
+    }
+    // TODO: Verify that index 0 is Recents
+
+    if (_index < _imageList.length) {
+      AssetEntity image = _imageList[_index];
+      if (!(_imageOn is AssetEntity) || (image.id != _imageOn.id)) {
+        WidgetsBinding.instance?.addPostFrameCallback((_) {
+          setState(() {
+            _imageOn = image;
+          });
+        });
+      }
+      File imageFile = (await image.file)!;
+      var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
+      if (decodedImage.height > decodedImage.width) {
+        return Image.file(
+          imageFile,
+          fit: BoxFit.cover,
+          height: double.infinity,
+          alignment: Alignment.center,
+        );
+      }
+      return Center(child: Image.file(imageFile));
+    } else {
       return Text("No pictures found");
     }
   }
