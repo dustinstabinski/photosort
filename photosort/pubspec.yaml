@@ -41,6 +41,7 @@ dependencies:
   permission_handler: ^8.3.0
   image_picker: ^0.8.4+4
   settings_ui: ^1.0.0
+  liquid_swipe: ^2.1.1
 
 dev_dependencies:
   flutter_test:

@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
 import 'dart:math';
 import './settings.dart';
 
@@ -68,12 +69,18 @@ class PhotoState extends State<Photo> {
             return Text("Not Authorized");
           },
         ),
-        persistentFooterButtons: [_displayButtons()]);
+        bottomNavigationBar: Container(
+          child: _displayButtons(),
+          color: Colors.blue,
+          height: 100,
+        ),
+        // persistentFooterButtons: [_displayButtons()],
+        backgroundColor: Colors.white);
   }
 
   Widget _displayButtons() {
-    final ButtonStyle style =
-        TextButton.styleFrom(textStyle: const TextStyle(fontSize: 50));
+    final ButtonStyle style = TextButton.styleFrom(
+        textStyle: const TextStyle(fontSize: 40), elevation: 0);
     final keepButton = ElevatedButton(
         onPressed: () => {
               setState(() {
@@ -103,10 +110,10 @@ class PhotoState extends State<Photo> {
 
     l.add(deleteButton);
     l.add(keepButton);
-    return Container(
+    return Center(
         child: Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [Expanded(child: deleteButton), Expanded(child: keepButton)],
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [Center(child: deleteButton), Center(child: keepButton)],
     ));
   }
 
@@ -138,23 +145,28 @@ class PhotoState extends State<Photo> {
         WidgetsBinding.instance?.addPostFrameCallback((_) {
           setState(() {
             _imageOn = image;
+            _imagesSorted.add(image.id);
           });
         });
       }
       File imageFile = (await image.file)!;
       var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
-      if (decodedImage.height > decodedImage.width) {
-        return Image.file(
-          imageFile,
-          fit: BoxFit.cover,
-          height: double.infinity,
-          alignment: Alignment.center,
-        );
-      }
-      return Center(child: Image.file(imageFile));
+      return finalImage(decodedImage, imageFile);
     } else {
       return Text("No pictures found");
     }
+  }
+
+  Widget finalImage(decodedImage, imageFile) {
+    if (decodedImage.height > decodedImage.width) {
+      return Image.file(
+        imageFile,
+        fit: BoxFit.cover,
+        height: double.infinity,
+        alignment: Alignment.center,
+      );
+    }
+    return Center(child: Image.file(imageFile));
   }
 
   Future<bool> _requestPermission(Permission permission) async {
