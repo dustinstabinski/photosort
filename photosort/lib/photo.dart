@@ -47,7 +47,9 @@ class PhotoState extends State<Photo> {
     int nextIndex = -1;
     // If all images have been sorted, don't enter loop
     if (_imageList.length != _imagesSorted.length) {
-      while (imageOrder.length < numImages) {
+      // Fill up the imageOrder until numImages is reached OR we run out of photos to choose from
+      while ((imageOrder.length < numImages) &&
+          (imageOrder.length < _imageList.length)) {
         nextIndex = _random.nextInt(max);
         // If the image has not been sorted yet and it has not been included in this run
         if (!_imagesSorted.contains(_imageList[nextIndex].id) &&
@@ -100,7 +102,9 @@ class PhotoState extends State<Photo> {
               setState(() {
                 _imagePointer++;
                 _imagesSorted.add(_imageOn.id);
-                _imageOn = _imageOrder[_imagePointer];
+                if (_imagePointer < _imageOrder.length) {
+                  _imageOn = _imageOrder[_imagePointer];
+                }
               })
             },
         style: style,
@@ -112,7 +116,9 @@ class PhotoState extends State<Photo> {
                   .deleteWithIds([_imageOn.id]).whenComplete(() => setState(() {
                         _imagePointer++;
                         _imagesSorted.add(_imageOn.id);
-                        _imageOn = _imageOrder[_imagePointer];
+                        if (_imagePointer < _imageOrder.length) {
+                          _imageOn = _imageOrder[_imagePointer];
+                        }
                       })),
             },
         style: style,
@@ -146,19 +152,17 @@ class PhotoState extends State<Photo> {
       setState(() {
         _imageList = imageList;
       });
-      // Initialize first photo order (hardcoding 5 for now)
-      nextImages(imageList.length, 5);
       return CircularProgressIndicator();
+    }
+
+    // If we need a new photo order (hardcoding 5 for now)
+    if (_imagePointer == _imageOrder.length) {
+      nextImages(_imageList.length, 5);
     }
 
     // If no images remain
     if (_imageList.length == 0 || _imageOrder.length == 0) {
       return Text("No photos found");
-    }
-
-    // If we need a new photo order (hardcoding 5 for now)
-    if (_imagePointer >= 5) {
-      nextImages(_imageList.length, 5);
     }
 
     // AssetEntity image = _imageList[_imagePointer];
@@ -173,23 +177,64 @@ class PhotoState extends State<Photo> {
       });
     }
     if (_imagePointer < _imageOrder.length) {
-      File imageFile = (await _imageOrder[_imagePointer].file)!;
-      var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
-      return finalImage(decodedImage, imageFile);
+      // In order to use liquid swipe, we need the current page to be surrounded by the next one
+      List<Widget> finalImages = [];
+      for (int i = 0; i < 2; i++) {
+        var image;
+        if (i == 0) {
+          image = _imageOrder[_imagePointer];
+        } else {
+          if (_imagePointer == (_imageOrder.length - 1)) {
+            image = Text("No more photos");
+            finalImages.add(image);
+            continue;
+          } else {
+            image = _imageOrder[_imagePointer + 1];
+          }
+        }
+        File imageFile = (await image.file)!;
+        var decodedImage =
+            await decodeImageFromList(imageFile.readAsBytesSync());
+        finalImages.add(finalImage(decodedImage, imageFile, image));
+      }
+      return LiquidSwipe(
+        pages: finalImages,
+        waveType: WaveType.circularReveal,
+        onPageChangeCallback: (activePageIndex) => {
+          if (activePageIndex > 0)
+            {
+              setState(() {
+                _imagePointer++;
+                _imagesSorted.add(_imageOn.id);
+                if (_imagePointer < _imageOrder.length) {
+                  _imageOn = _imageOrder[_imagePointer];
+                }
+              })
+            }
+        },
+        enableLoop: true,
+      );
     }
     return CircularProgressIndicator();
   }
 
-  Widget finalImage(decodedImage, imageFile) {
+  Widget finalImage(decodedImage, imageFile, image) {
     if (decodedImage.height > decodedImage.width) {
       return Image.file(
         imageFile,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         height: double.infinity,
         alignment: Alignment.center,
       );
     }
-    return Center(child: Image.file(imageFile));
+    return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(imageFile.path),
+            fit: BoxFit.contain,
+          ),
+          color: Colors.white),
+    );
   }
 
   Future<bool> _requestPermission(Permission permission) async {
