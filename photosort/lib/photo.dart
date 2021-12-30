@@ -17,16 +17,16 @@ class Photo extends StatefulWidget {
 }
 
 class PhotoState extends State<Photo> {
-  int _index = 0;
   var _imageOn;
   Set<String> _imagesSorted = {};
   var _imageList;
   final _random = new Random();
+  List<AssetEntity> _imageOrder = [];
+  int _imagePointer = 0;
 
   @override
   void initState() {
     super.initState();
-    _index = 0;
     _imageOn = null;
   }
 
@@ -41,16 +41,30 @@ class PhotoState extends State<Photo> {
     }));
   }
 
-  int nextImage(int max) {
+  void nextImages(int max, int numImages) async {
+    List<AssetEntity> imageOrder = [];
+    Set<int> indicesIncluded = {};
     int nextIndex = -1;
+    // If all images have been sorted, don't enter loop
     if (_imageList.length != _imagesSorted.length) {
-      while (
-          nextIndex == -1 || _imagesSorted.contains(_imageList[nextIndex].id)) {
-        nextIndex = 0 + _random.nextInt(max - 0);
+      while (imageOrder.length < numImages) {
+        nextIndex = _random.nextInt(max);
+        // If the image has not been sorted yet and it has not been included in this run
+        if (!_imagesSorted.contains(_imageList[nextIndex].id) &&
+            !indicesIncluded.contains(nextIndex)) {
+          AssetEntity image = _imageList[nextIndex];
+          // File imageFile = (await image.file)!;
+          // var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
+          imageOrder.add(image);
+          indicesIncluded.add(nextIndex);
+        }
       }
     }
-
-    return nextIndex;
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        _imageOrder = imageOrder;
+      });
+    });
   }
 
   @override
@@ -84,8 +98,9 @@ class PhotoState extends State<Photo> {
     final keepButton = ElevatedButton(
         onPressed: () => {
               setState(() {
-                _index = nextImage(_imageList.length);
+                _imagePointer++;
                 _imagesSorted.add(_imageOn.id);
+                _imageOn = _imageOrder[_imagePointer];
               })
             },
         style: style,
@@ -95,12 +110,9 @@ class PhotoState extends State<Photo> {
         onPressed: () => {
               PhotoManager.editor
                   .deleteWithIds([_imageOn.id]).whenComplete(() => setState(() {
-                        if (_imageList.length > 0) {
-                          // HANDLE DELETE
-
-                        }
-
-                        _index = nextImage(_imageList.length);
+                        _imagePointer++;
+                        _imagesSorted.add(_imageOn.id);
+                        _imageOn = _imageOrder[_imagePointer];
                       })),
             },
         style: style,
@@ -126,35 +138,46 @@ class PhotoState extends State<Photo> {
   }
 
   Future<Widget> _displayPhoto() async {
+    // If image list has not be initialized yet
     if (!(_imageList is List)) {
       var list = await PhotoManager.getAssetPathList();
+      // TODO: Verify that index 0 is Recents
       List<AssetEntity> imageList = await list[0].assetList;
       setState(() {
         _imageList = imageList;
       });
+      // Initialize first photo order (hardcoding 5 for now)
+      nextImages(imageList.length, 5);
       return CircularProgressIndicator();
     }
-    if (_imageList.length == 0 || _index == -1) {
+
+    // If no images remain
+    if (_imageList.length == 0 || _imageOrder.length == 0) {
       return Text("No photos found");
     }
-    // TODO: Verify that index 0 is Recents
 
-    if (_index < _imageList.length) {
-      AssetEntity image = _imageList[_index];
-      if (!(_imageOn is AssetEntity) || (image.id != _imageOn.id)) {
-        WidgetsBinding.instance?.addPostFrameCallback((_) {
-          setState(() {
-            _imageOn = image;
-            _imagesSorted.add(image.id);
-          });
+    // If we need a new photo order (hardcoding 5 for now)
+    if (_imagePointer >= 5) {
+      nextImages(_imageList.length, 5);
+    }
+
+    // AssetEntity image = _imageList[_imagePointer];
+
+    // If imageOn has not be initialized
+    if (_imageOn is! AssetEntity) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        setState(() {
+          _imageOn = _imageOrder[0];
+          _imagesSorted.add(_imageOn.id);
         });
-      }
-      File imageFile = (await image.file)!;
+      });
+    }
+    if (_imagePointer < _imageOrder.length) {
+      File imageFile = (await _imageOrder[_imagePointer].file)!;
       var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
       return finalImage(decodedImage, imageFile);
-    } else {
-      return Text("No pictures found");
     }
+    return CircularProgressIndicator();
   }
 
   Widget finalImage(decodedImage, imageFile) {
