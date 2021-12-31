@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'dart:math';
 import './settings.dart';
+import './swiper.dart';
 
 class Photo extends StatefulWidget {
   @override
@@ -94,35 +95,35 @@ class PhotoState extends State<Photo> {
         backgroundColor: Colors.white);
   }
 
+  void keepPhoto() {
+    setState(() {
+      _imagePointer++;
+      _imagesSorted.add(_imageOn.id);
+      if (_imagePointer < _imageOrder.length) {
+        _imageOn = _imageOrder[_imagePointer];
+      }
+    });
+  }
+
+  void deletePhoto() {
+    PhotoManager.editor
+        .deleteWithIds([_imageOn.id]).whenComplete(() => setState(() {
+              _imagePointer++;
+              _imagesSorted.add(_imageOn.id);
+              if (_imagePointer < _imageOrder.length) {
+                _imageOn = _imageOrder[_imagePointer];
+              }
+            }));
+  }
+
   Widget _displayButtons() {
     final ButtonStyle style = TextButton.styleFrom(
         textStyle: const TextStyle(fontSize: 40), elevation: 0);
     final keepButton = ElevatedButton(
-        onPressed: () => {
-              setState(() {
-                _imagePointer++;
-                _imagesSorted.add(_imageOn.id);
-                if (_imagePointer < _imageOrder.length) {
-                  _imageOn = _imageOrder[_imagePointer];
-                }
-              })
-            },
-        style: style,
-        child: const Text('Keep'));
+        onPressed: keepPhoto, style: style, child: const Text('Keep'));
 
     final deleteButton = ElevatedButton(
-        onPressed: () => {
-              PhotoManager.editor
-                  .deleteWithIds([_imageOn.id]).whenComplete(() => setState(() {
-                        _imagePointer++;
-                        _imagesSorted.add(_imageOn.id);
-                        if (_imagePointer < _imageOrder.length) {
-                          _imageOn = _imageOrder[_imagePointer];
-                        }
-                      })),
-            },
-        style: style,
-        child: const Text('Delete'));
+        onPressed: deletePhoto, style: style, child: const Text('Delete'));
 
     List<Widget> l = [];
 
@@ -157,7 +158,7 @@ class PhotoState extends State<Photo> {
 
     // If we need a new photo order (hardcoding 5 for now)
     if (_imagePointer == _imageOrder.length) {
-      nextImages(_imageList.length, 5);
+      nextImages(_imageList.length, 10);
     }
 
     // If no images remain
@@ -177,64 +178,9 @@ class PhotoState extends State<Photo> {
       });
     }
     if (_imagePointer < _imageOrder.length) {
-      // In order to use liquid swipe, we need the current page to be surrounded by the next one
-      List<Widget> finalImages = [];
-      for (int i = 0; i < 2; i++) {
-        var image;
-        if (i == 0) {
-          image = _imageOrder[_imagePointer];
-        } else {
-          if (_imagePointer == (_imageOrder.length - 1)) {
-            image = Text("No more photos");
-            finalImages.add(image);
-            continue;
-          } else {
-            image = _imageOrder[_imagePointer + 1];
-          }
-        }
-        File imageFile = (await image.file)!;
-        var decodedImage =
-            await decodeImageFromList(imageFile.readAsBytesSync());
-        finalImages.add(finalImage(decodedImage, imageFile, image));
-      }
-      return LiquidSwipe(
-        pages: finalImages,
-        waveType: WaveType.circularReveal,
-        onPageChangeCallback: (activePageIndex) => {
-          if (activePageIndex > 0)
-            {
-              setState(() {
-                _imagePointer++;
-                _imagesSorted.add(_imageOn.id);
-                if (_imagePointer < _imageOrder.length) {
-                  _imageOn = _imageOrder[_imagePointer];
-                }
-              })
-            }
-        },
-        enableLoop: true,
-      );
+      return Swiper(_imageOrder, keepPhoto, deletePhoto);
     }
     return CircularProgressIndicator();
-  }
-
-  Widget finalImage(decodedImage, imageFile, image) {
-    if (decodedImage.height > decodedImage.width) {
-      return Image.file(
-        imageFile,
-        fit: BoxFit.contain,
-        height: double.infinity,
-        alignment: Alignment.center,
-      );
-    }
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(imageFile.path),
-            fit: BoxFit.contain,
-          ),
-          color: Colors.white),
-    );
   }
 
   Future<bool> _requestPermission(Permission permission) async {
