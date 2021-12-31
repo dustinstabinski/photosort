@@ -11,6 +11,7 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 import 'dart:math';
 import './settings.dart';
 import './swiper.dart';
+import 'package:tcard/tcard.dart';
 
 class Photo extends StatefulWidget {
   @override
@@ -24,11 +25,13 @@ class PhotoState extends State<Photo> {
   final _random = new Random();
   List<AssetEntity> _imageOrder = [];
   int _imagePointer = 0;
+  var _controller;
 
   @override
   void initState() {
     super.initState();
     _imageOn = null;
+    _controller = TCardController();
   }
 
   void toSettings() {
@@ -62,10 +65,13 @@ class PhotoState extends State<Photo> {
           indicesIncluded.add(nextIndex);
         }
       }
+    } else {
+      imageOrder = [];
     }
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       setState(() {
         _imageOrder = imageOrder;
+        _imagePointer = 0;
       });
     });
   }
@@ -95,6 +101,8 @@ class PhotoState extends State<Photo> {
         backgroundColor: Colors.white);
   }
 
+  void refreshPhotos() {}
+
   void keepPhoto() {
     setState(() {
       _imagePointer++;
@@ -117,13 +125,19 @@ class PhotoState extends State<Photo> {
   }
 
   Widget _displayButtons() {
+    SwipDirection? left = SwipDirection.Left;
+    SwipDirection? right = SwipDirection.Right;
     final ButtonStyle style = TextButton.styleFrom(
         textStyle: const TextStyle(fontSize: 40), elevation: 0);
     final keepButton = ElevatedButton(
-        onPressed: keepPhoto, style: style, child: const Text('Keep'));
+        onPressed: () => _controller.forward(direction: right),
+        style: style,
+        child: const Text('Keep'));
 
     final deleteButton = ElevatedButton(
-        onPressed: deletePhoto, style: style, child: const Text('Delete'));
+        onPressed: () => _controller.forward(direction: left),
+        style: style,
+        child: const Text('Delete'));
 
     List<Widget> l = [];
 
@@ -157,7 +171,7 @@ class PhotoState extends State<Photo> {
     }
 
     // If we need a new photo order (hardcoding 5 for now)
-    if (_imagePointer == _imageOrder.length) {
+    if ((_imagePointer == _imageOrder.length)) {
       nextImages(_imageList.length, 10);
     }
 
@@ -178,7 +192,7 @@ class PhotoState extends State<Photo> {
       });
     }
     if (_imagePointer < _imageOrder.length) {
-      return Swiper(_imageOrder, keepPhoto, deletePhoto);
+      return Swiper(_imageOrder, keepPhoto, deletePhoto, _controller);
     }
     return CircularProgressIndicator();
   }

@@ -10,15 +10,19 @@ class Swiper extends StatefulWidget {
   var _images;
   var _keepPhoto;
   var _deletePhoto;
+  var _controller;
 
-  Swiper(List<AssetEntity> images, Function keepPhoto, Function deletePhoto) {
+  Swiper(List<AssetEntity> images, Function keepPhoto, Function deletePhoto,
+      TCardController controller) {
     _images = images;
     _keepPhoto = keepPhoto;
     _deletePhoto = deletePhoto;
+    _controller = controller;
   }
 
   @override
-  SwiperState createState() => SwiperState(_images, _keepPhoto, _deletePhoto);
+  SwiperState createState() =>
+      SwiperState(_images, _keepPhoto, _deletePhoto, _controller);
 }
 
 class SwiperState extends State<Swiper> {
@@ -27,12 +31,14 @@ class SwiperState extends State<Swiper> {
   var _deletePhoto;
   double _x = 100.0;
   Offset _offset = Offset.zero;
+  TCardController _controller = TCardController();
 
-  SwiperState(
-      List<AssetEntity> images, Function keepPhoto, Function deletePhoto) {
+  SwiperState(List<AssetEntity> images, Function keepPhoto,
+      Function deletePhoto, TCardController controller) {
     _images = images;
     _keepPhoto = keepPhoto;
     _deletePhoto = deletePhoto;
+    _controller = controller;
   }
 
   @override
@@ -72,6 +78,9 @@ class SwiperState extends State<Swiper> {
             _deletePhoto();
           }
         },
+        lockYAxis: true,
+        delaySlideFor: 800,
+        controller: _controller,
       ),
     );
   }
