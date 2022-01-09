@@ -18,7 +18,7 @@ class Photo extends StatefulWidget {
   PhotoState createState() => PhotoState();
 }
 
-class PhotoState extends State<Photo> {
+class PhotoState extends State<Photo> with WidgetsBindingObserver {
   var _imageOn;
   Set<String> _imagesSorted = {};
   var _imageList;
@@ -26,12 +26,43 @@ class PhotoState extends State<Photo> {
   List<AssetEntity> _imageOrder = [];
   int _imagePointer = 0;
   var _controller;
+  int _albumOn = -1;
+  int _pageOn = -1;
+  var _assetList;
+
+  // FOR LATER
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   if (state == AppLifecycleState.inactive ||
+  //       state == AppLifecycleState.detached) {
+  //     reloadPhotos();
+  //   }
+  // }
 
   @override
   void initState() {
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
     _imageOn = null;
     _controller = TCardController();
+    _albumOn = -1;
+    PhotoManager.getAssetPathList().then((value) => {
+          setState(() {
+            _assetList = value;
+          })
+        });
+  }
+
+  void reloadPhotos() {
+    PhotoManager.getAssetPathList().then((value) => {
+          setState(() {
+            _assetList = value;
+            _imageList = null;
+            _albumOn = -1;
+            _imageOn = null;
+            _pageOn = -1;
+          })
+        });
   }
 
   void toSettings() {
@@ -45,43 +76,22 @@ class PhotoState extends State<Photo> {
     }));
   }
 
-  void nextImages(int max, int numImages) async {
-    List<AssetEntity> imageOrder = [];
-    Set<int> indicesIncluded = {};
-    int nextIndex = -1;
-    // If all images have been sorted, don't enter loop
-    if (_imageList.length != _imagesSorted.length) {
-      // Fill up the imageOrder until numImages is reached OR we run out of photos to choose from
-      while ((imageOrder.length < numImages) &&
-          (imageOrder.length < _imageList.length)) {
-        nextIndex = _random.nextInt(max);
-        // If the image has not been sorted yet and it has not been included in this run
-        if (!_imagesSorted.contains(_imageList[nextIndex].id) &&
-            !indicesIncluded.contains(nextIndex)) {
-          AssetEntity image = _imageList[nextIndex];
-          // File imageFile = (await image.file)!;
-          // var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
-          imageOrder.add(image);
-          indicesIncluded.add(nextIndex);
-        }
-      }
-    } else {
-      imageOrder = [];
-    }
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      setState(() {
-        _imageOrder = imageOrder;
-        _imagePointer = 0;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("PhotoSort"), actions: <Widget>[
-          IconButton(onPressed: toSettings, icon: Icon(Icons.settings))
-        ]),
+        appBar: AppBar(
+            title: Text("PhotoSort"),
+            actions: <Widget>[
+              IconButton(onPressed: toSettings, icon: Icon(Icons.settings))
+            ],
+            leading: Builder(builder: (BuildContext context) {
+              if (_albumOn != -1) {
+                return IconButton(
+                    onPressed: reloadPhotos, icon: Icon(Icons.chevron_left));
+              } else {
+                return Container();
+              }
+            })),
         body: FutureBuilder<bool>(
           future: _requestPermission(Permission.photos),
           builder: (context, snapshot) {
@@ -138,16 +148,15 @@ class PhotoState extends State<Photo> {
         onPressed: () => _controller.forward(direction: left),
         style: style,
         child: const Text('Delete'));
-
-    List<Widget> l = [];
-
-    l.add(deleteButton);
-    l.add(keepButton);
-    return Center(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [Center(child: deleteButton), Center(child: keepButton)],
-    ));
+    if (_imageOn != null) {
+      return Center(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [Center(child: deleteButton), Center(child: keepButton)],
+      ));
+    } else {
+      return Container();
+    }
   }
 
   FutureBuilder<Widget> _displayPhotoBuilder() {
@@ -158,26 +167,48 @@ class PhotoState extends State<Photo> {
         });
   }
 
+  int getNextPage(numPages) {
+    return _random.nextInt(numPages);
+  }
+
   Future<Widget> _displayPhoto() async {
+    // List<AssetPathEntity>? list;
     // If image list has not be initialized yet
     if (!(_imageList is List)) {
-      var list = await PhotoManager.getAssetPathList();
+      // list = await PhotoManager.getAssetPathList();
       // TODO: Verify that index 0 is Recents
-      List<AssetEntity> imageList = await list[0].assetList;
+      if (_albumOn < 0) {
+        return albumSelect(_assetList);
+      }
+      if (_pageOn == -1) {
+        int numPhotos = _assetList[_albumOn].assetCount;
+        int numPages = (numPhotos / 10).ceil();
+        setState(() {
+          _pageOn = getNextPage(numPages);
+        });
+      }
+      List<AssetEntity> imageList =
+          await _assetList[_albumOn].getAssetListPaged(_pageOn, 10);
       setState(() {
         _imageList = imageList;
       });
       return CircularProgressIndicator();
     }
 
-    // If we need a new photo order (hardcoding 5 for now)
-    if ((_imagePointer == _imageOrder.length)) {
-      nextImages(_imageList.length, 10);
-    }
-
     // If no images remain
-    if (_imageList.length == 0 || _imageOrder.length == 0) {
+    if (_imageList.length == 0) {
       return Text("No photos found");
+    }
+    // If we need a new photo order (hardcoding 10 for now)
+    if ((_imagePointer == _imageList.length)) {
+      int numPhotos = _assetList[_albumOn].assetCount;
+      int numPages = (numPhotos / 10).ceil();
+      setState(() {
+        _imageOn = null;
+        _imageList = null;
+        _imagePointer = 0;
+        _pageOn = getNextPage(numPages);
+      });
     }
 
     // AssetEntity image = _imageList[_imagePointer];
@@ -186,15 +217,58 @@ class PhotoState extends State<Photo> {
     if (_imageOn is! AssetEntity) {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         setState(() {
-          _imageOn = _imageOrder[0];
+          _imageOn = _imageList[0];
           _imagesSorted.add(_imageOn.id);
         });
       });
     }
-    if (_imagePointer < _imageOrder.length) {
-      return Swiper(_imageOrder, keepPhoto, deletePhoto, _controller);
+    if (_imagePointer < _imageList.length) {
+      return Swiper(_imageList, keepPhoto, deletePhoto, _controller);
     }
     return CircularProgressIndicator();
+  }
+
+  void setAlbum(index) {
+    setState(() {
+      _albumOn = index;
+    });
+  }
+
+  Widget albumSelect(list) {
+    Map<int, Color> color = {
+      50: Color.fromRGBO(136, 14, 79, .1),
+      100: Color.fromRGBO(136, 14, 79, .2),
+      200: Color.fromRGBO(136, 14, 79, .3),
+      300: Color.fromRGBO(136, 14, 79, .4),
+      400: Color.fromRGBO(136, 14, 79, .5),
+      500: Color.fromRGBO(136, 14, 79, .6),
+      600: Color.fromRGBO(136, 14, 79, .7),
+      700: Color.fromRGBO(136, 14, 79, .8),
+      800: Color.fromRGBO(136, 14, 79, .9),
+      900: Color.fromRGBO(136, 14, 79, 1),
+    };
+    return ListView(
+        padding: const EdgeInsets.all(8),
+        children: List<Widget>.generate(list.length + 1, (index) {
+          int listIndex = index - 1;
+          if (index == 0) {
+            return Center(
+                child: Text("Which album would you like to sort?",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: MaterialColor(0xFFF37E21, color))));
+          } else {
+            return Center(
+                child: TextButton(
+                    onPressed: () {
+                      setAlbum(listIndex);
+                    },
+                    style: TextButton.styleFrom(
+                        fixedSize: const Size(1000, 100),
+                        textStyle: TextStyle(fontSize: 20)),
+                    child: Text(list[listIndex].name)));
+          }
+        }));
   }
 
   Future<bool> _requestPermission(Permission permission) async {
