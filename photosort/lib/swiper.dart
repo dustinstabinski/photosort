@@ -58,10 +58,7 @@ class SwiperState extends State<Swiper> {
       File imageFile = (await image.file)!;
       var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
       finalImages.add([decodedImage, imageFile]);
-      //finalImages.add(finalImage(decodedImage, imageFile));
     }
-
-    // finalImages.sort((a, b) => b[0].height.compareTo(a[0].height));
 
     for (var imageInfo in finalImages) {
       cards.add(finalImage(imageInfo[0], imageInfo[1]));
@@ -71,11 +68,11 @@ class SwiperState extends State<Swiper> {
       child: TCard(
         cards: cards,
         size: const Size(double.infinity, double.infinity),
-        onForward: (index, info) {
+        onForward: (index, info) async {
           if (info.direction == SwipDirection.Right) {
             _keepPhoto();
           } else if (info.direction == SwipDirection.Left) {
-            _deletePhoto();
+            await _deletePhoto();
           }
         },
         lockYAxis: true,
@@ -103,14 +100,5 @@ class SwiperState extends State<Swiper> {
         alignment: Alignment.center,
       ),
     );
-    // return Container(
-    //     child: Center(
-    //       child: Image.file(
-    //         imageFile,
-    //         fit: BoxFit.contain,
-    //         alignment: Alignment.center,
-    //       ),
-    //     ),
-    //     decoration: boxDecoration);
   }
 }

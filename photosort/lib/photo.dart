@@ -1,13 +1,7 @@
-import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:photo_manager/photo_manager.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
 import 'dart:math';
 import './settings.dart';
 import './swiper.dart';
@@ -20,24 +14,16 @@ class Photo extends StatefulWidget {
 
 class PhotoState extends State<Photo> with WidgetsBindingObserver {
   var _imageOn;
-  Set<String> _imagesSorted = {};
   var _imageList;
+  var _deletionAlbum;
   final _random = new Random();
-  List<AssetEntity> _imageOrder = [];
   int _imagePointer = 0;
   var _controller;
   int _albumOn = -1;
+  int _destinationAlbumOn = -1;
   int _pageOn = -1;
   var _assetList;
-
-  // FOR LATER
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if (state == AppLifecycleState.inactive ||
-  //       state == AppLifecycleState.detached) {
-  //     reloadPhotos();
-  //   }
-  // }
+  List<String> _idsToDelete = [];
 
   @override
   void initState() {
@@ -46,11 +32,18 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
     _imageOn = null;
     _controller = TCardController();
     _albumOn = -1;
-    PhotoManager.getAssetPathList().then((value) => {
-          setState(() {
-            _assetList = value;
-          })
-        });
+    var deleteAsset;
+    PhotoManager.editor.iOS
+        .createAlbum(
+          "PhotoSort - To Delete",
+        )
+        .then(
+            (deletionAlbum) => PhotoManager.getAssetPathList().then((value) => {
+                  setState(() {
+                    _assetList = value;
+                    _deletionAlbum = deletionAlbum;
+                  })
+                }));
   }
 
   void reloadPhotos() {
@@ -111,27 +104,24 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
         backgroundColor: Colors.white);
   }
 
-  void refreshPhotos() {}
-
   void keepPhoto() {
     setState(() {
       _imagePointer++;
-      _imagesSorted.add(_imageOn.id);
-      if (_imagePointer < _imageOrder.length) {
-        _imageOn = _imageOrder[_imagePointer];
+      if (_imagePointer < _imageList.length) {
+        _imageOn = _imageList[_imagePointer];
       }
     });
   }
 
-  void deletePhoto() {
-    PhotoManager.editor
-        .deleteWithIds([_imageOn.id]).whenComplete(() => setState(() {
-              _imagePointer++;
-              _imagesSorted.add(_imageOn.id);
-              if (_imagePointer < _imageOrder.length) {
-                _imageOn = _imageOrder[_imagePointer];
-              }
-            }));
+  void deletePhoto() async {
+    await PhotoManager.editor
+        .copyAssetToPath(asset: _imageOn, pathEntity: _deletionAlbum);
+    setState(() {
+      _imagePointer++;
+      if (_imagePointer < _imageList.length) {
+        _imageOn = _imageList[_imagePointer];
+      }
+    });
   }
 
   Widget _displayButtons() {
@@ -172,12 +162,10 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
   }
 
   Future<Widget> _displayPhoto() async {
-    // List<AssetPathEntity>? list;
     // If image list has not be initialized yet
     if (!(_imageList is List)) {
-      // list = await PhotoManager.getAssetPathList();
       // TODO: Verify that index 0 is Recents
-      if (_albumOn < 0) {
+      if (_albumOn < 0 || _destinationAlbumOn < 0) {
         return albumSelect(_assetList);
       }
       if (_pageOn == -1) {
@@ -201,6 +189,7 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
     }
     // If we need a new photo order (hardcoding 10 for now)
     if ((_imagePointer == _imageList.length)) {
+      await PhotoManager.editor.deleteWithIds(_idsToDelete);
       int numPhotos = _assetList[_albumOn].assetCount;
       int numPages = (numPhotos / 10).ceil();
       setState(() {
@@ -218,7 +207,6 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
       WidgetsBinding.instance?.addPostFrameCallback((_) {
         setState(() {
           _imageOn = _imageList[0];
-          _imagesSorted.add(_imageOn.id);
         });
       });
     }
@@ -231,6 +219,12 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
   void setAlbum(index) {
     setState(() {
       _albumOn = index;
+    });
+  }
+
+  void setDestinationAlbum(index) {
+    setState(() {
+      _destinationAlbumOn = index;
     });
   }
 
@@ -249,24 +243,38 @@ class PhotoState extends State<Photo> with WidgetsBindingObserver {
     };
     return ListView(
         padding: const EdgeInsets.all(8),
-        children: List<Widget>.generate(list.length + 1, (index) {
+        children: List<Widget>.generate(list.length + 2, (index) {
           int listIndex = index - 1;
+          String phrase = "Which album would you like to sort?";
+          if (_albumOn >= 0) {
+            phrase = "Where would you like the deleted photos to go?";
+          }
           if (index == 0) {
             return Center(
-                child: Text("Which album would you like to sort?",
+                child: Text(phrase,
                     style: TextStyle(
                         fontSize: 20,
                         color: MaterialColor(0xFFF37E21, color))));
-          } else {
+          } else if (index < list.length + 1) {
             return Center(
                 child: TextButton(
                     onPressed: () {
-                      setAlbum(listIndex);
+                      _albumOn < 0
+                          ? setAlbum(listIndex)
+                          : setDestinationAlbum(listIndex);
                     },
                     style: TextButton.styleFrom(
                         fixedSize: const Size(1000, 100),
                         textStyle: TextStyle(fontSize: 20)),
                     child: Text(list[listIndex].name)));
+          } else if (index == list.length + 1 && _albumOn >= 0) {
+            return Center(
+                child: Text("Create a new album",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: MaterialColor(0xFFF37E21, color))));
+          } else {
+            return SizedBox.shrink();
           }
         }));
   }
