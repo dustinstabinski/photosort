@@ -1,0 +1,704 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		777C2CC127C2902D00656BEC /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CC027C2902D00656BEC /* Tests_iOS.swift */; };
+		777C2CC327C2902D00656BEC /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CC227C2902D00656BEC /* Tests_iOSLaunchTests.swift */; };
+		777C2CCD27C2902E00656BEC /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CCC27C2902E00656BEC /* Tests_macOS.swift */; };
+		777C2CCF27C2902E00656BEC /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CCE27C2902E00656BEC /* Tests_macOSLaunchTests.swift */; };
+		777C2CD027C2902E00656BEC /* PhotoSortApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CA827C2902A00656BEC /* PhotoSortApp.swift */; };
+		777C2CD127C2902E00656BEC /* PhotoSortApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CA827C2902A00656BEC /* PhotoSortApp.swift */; };
+		777C2CD227C2902E00656BEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CA927C2902A00656BEC /* ContentView.swift */; };
+		777C2CD327C2902E00656BEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CA927C2902A00656BEC /* ContentView.swift */; };
+		777C2CD427C2902E00656BEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 777C2CAA27C2902D00656BEC /* Assets.xcassets */; };
+		777C2CD527C2902E00656BEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 777C2CAA27C2902D00656BEC /* Assets.xcassets */; };
+		777C2CE527C2921700656BEC /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CE427C2921700656BEC /* PhotoLibrary.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		777C2CBD27C2902D00656BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 777C2CA327C2902900656BEC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 777C2CAE27C2902D00656BEC;
+			remoteInfo = "PhotoSort (iOS)";
+		};
+		777C2CC927C2902E00656BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 777C2CA327C2902900656BEC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 777C2CB427C2902D00656BEC;
+			remoteInfo = "PhotoSort (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		777C2CA827C2902A00656BEC /* PhotoSortApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSortApp.swift; sourceTree = "<group>"; };
+		777C2CA927C2902A00656BEC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		777C2CAA27C2902D00656BEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		777C2CAF27C2902D00656BEC /* PhotoSort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSort.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C2CB527C2902D00656BEC /* PhotoSort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoSort.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C2CB727C2902D00656BEC /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		777C2CBC27C2902D00656BEC /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C2CC027C2902D00656BEC /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
+		777C2CC227C2902D00656BEC /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		777C2CC827C2902E00656BEC /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C2CCC27C2902E00656BEC /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
+		777C2CCE27C2902E00656BEC /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+		777C2CE427C2921700656BEC /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		777C2CAC27C2902D00656BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CB227C2902D00656BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CB927C2902D00656BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CC527C2902E00656BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		777C2CA227C2902900656BEC = {
+			isa = PBXGroup;
+			children = (
+				777C2CA727C2902A00656BEC /* Shared */,
+				777C2CB627C2902D00656BEC /* macOS */,
+				777C2CBF27C2902D00656BEC /* Tests iOS */,
+				777C2CCB27C2902E00656BEC /* Tests macOS */,
+				777C2CB027C2902D00656BEC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		777C2CA727C2902A00656BEC /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				777C2CA827C2902A00656BEC /* PhotoSortApp.swift */,
+				777C2CA927C2902A00656BEC /* ContentView.swift */,
+				777C2CAA27C2902D00656BEC /* Assets.xcassets */,
+				777C2CE427C2921700656BEC /* PhotoLibrary.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		777C2CB027C2902D00656BEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				777C2CAF27C2902D00656BEC /* PhotoSort.app */,
+				777C2CB527C2902D00656BEC /* PhotoSort.app */,
+				777C2CBC27C2902D00656BEC /* Tests iOS.xctest */,
+				777C2CC827C2902E00656BEC /* Tests macOS.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		777C2CB627C2902D00656BEC /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				777C2CB727C2902D00656BEC /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		777C2CBF27C2902D00656BEC /* Tests iOS */ = {
+			isa = PBXGroup;
+			children = (
+				777C2CC027C2902D00656BEC /* Tests_iOS.swift */,
+				777C2CC227C2902D00656BEC /* Tests_iOSLaunchTests.swift */,
+			);
+			path = "Tests iOS";
+			sourceTree = "<group>";
+		};
+		777C2CCB27C2902E00656BEC /* Tests macOS */ = {
+			isa = PBXGroup;
+			children = (
+				777C2CCC27C2902E00656BEC /* Tests_macOS.swift */,
+				777C2CCE27C2902E00656BEC /* Tests_macOSLaunchTests.swift */,
+			);
+			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		777C2CAE27C2902D00656BEC /* PhotoSort (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777C2CD827C2902E00656BEC /* Build configuration list for PBXNativeTarget "PhotoSort (iOS)" */;
+			buildPhases = (
+				777C2CAB27C2902D00656BEC /* Sources */,
+				777C2CAC27C2902D00656BEC /* Frameworks */,
+				777C2CAD27C2902D00656BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PhotoSort (iOS)";
+			productName = "PhotoSort (iOS)";
+			productReference = 777C2CAF27C2902D00656BEC /* PhotoSort.app */;
+			productType = "com.apple.product-type.application";
+		};
+		777C2CB427C2902D00656BEC /* PhotoSort (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777C2CDB27C2902E00656BEC /* Build configuration list for PBXNativeTarget "PhotoSort (macOS)" */;
+			buildPhases = (
+				777C2CB127C2902D00656BEC /* Sources */,
+				777C2CB227C2902D00656BEC /* Frameworks */,
+				777C2CB327C2902D00656BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PhotoSort (macOS)";
+			productName = "PhotoSort (macOS)";
+			productReference = 777C2CB527C2902D00656BEC /* PhotoSort.app */;
+			productType = "com.apple.product-type.application";
+		};
+		777C2CBB27C2902D00656BEC /* Tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777C2CDE27C2902E00656BEC /* Build configuration list for PBXNativeTarget "Tests iOS" */;
+			buildPhases = (
+				777C2CB827C2902D00656BEC /* Sources */,
+				777C2CB927C2902D00656BEC /* Frameworks */,
+				777C2CBA27C2902D00656BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				777C2CBE27C2902D00656BEC /* PBXTargetDependency */,
+			);
+			name = "Tests iOS";
+			productName = "Tests iOS";
+			productReference = 777C2CBC27C2902D00656BEC /* Tests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		777C2CC727C2902E00656BEC /* Tests macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777C2CE127C2902E00656BEC /* Build configuration list for PBXNativeTarget "Tests macOS" */;
+			buildPhases = (
+				777C2CC427C2902E00656BEC /* Sources */,
+				777C2CC527C2902E00656BEC /* Frameworks */,
+				777C2CC627C2902E00656BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				777C2CCA27C2902E00656BEC /* PBXTargetDependency */,
+			);
+			name = "Tests macOS";
+			productName = "Tests macOS";
+			productReference = 777C2CC827C2902E00656BEC /* Tests macOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		777C2CA327C2902900656BEC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					777C2CAE27C2902D00656BEC = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					777C2CB427C2902D00656BEC = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					777C2CBB27C2902D00656BEC = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 777C2CAE27C2902D00656BEC;
+					};
+					777C2CC727C2902E00656BEC = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 777C2CB427C2902D00656BEC;
+					};
+				};
+			};
+			buildConfigurationList = 777C2CA627C2902900656BEC /* Build configuration list for PBXProject "PhotoSort" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 777C2CA227C2902900656BEC;
+			productRefGroup = 777C2CB027C2902D00656BEC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				777C2CAE27C2902D00656BEC /* PhotoSort (iOS) */,
+				777C2CB427C2902D00656BEC /* PhotoSort (macOS) */,
+				777C2CBB27C2902D00656BEC /* Tests iOS */,
+				777C2CC727C2902E00656BEC /* Tests macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		777C2CAD27C2902D00656BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CD427C2902E00656BEC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CB327C2902D00656BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CD527C2902E00656BEC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CBA27C2902D00656BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CC627C2902E00656BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		777C2CAB27C2902D00656BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CD227C2902E00656BEC /* ContentView.swift in Sources */,
+				777C2CE527C2921700656BEC /* PhotoLibrary.swift in Sources */,
+				777C2CD027C2902E00656BEC /* PhotoSortApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CB127C2902D00656BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CD327C2902E00656BEC /* ContentView.swift in Sources */,
+				777C2CD127C2902E00656BEC /* PhotoSortApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CB827C2902D00656BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CC327C2902D00656BEC /* Tests_iOSLaunchTests.swift in Sources */,
+				777C2CC127C2902D00656BEC /* Tests_iOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CC427C2902E00656BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CCF27C2902E00656BEC /* Tests_macOSLaunchTests.swift in Sources */,
+				777C2CCD27C2902E00656BEC /* Tests_macOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		777C2CBE27C2902D00656BEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 777C2CAE27C2902D00656BEC /* PhotoSort (iOS) */;
+			targetProxy = 777C2CBD27C2902D00656BEC /* PBXContainerItemProxy */;
+		};
+		777C2CCA27C2902E00656BEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 777C2CB427C2902D00656BEC /* PhotoSort (macOS) */;
+			targetProxy = 777C2CC927C2902E00656BEC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		777C2CD627C2902E00656BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		777C2CD727C2902E00656BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		777C2CD927C2902E00656BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Need to access photos";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = monterayprod.PhotoSort;
+				PRODUCT_NAME = PhotoSort;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		777C2CDA27C2902E00656BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Need to access photos";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = monterayprod.PhotoSort;
+				PRODUCT_NAME = PhotoSort;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		777C2CDC27C2902E00656BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = monterayprod.PhotoSort;
+				PRODUCT_NAME = PhotoSort;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		777C2CDD27C2902E00656BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = monterayprod.PhotoSort;
+				PRODUCT_NAME = PhotoSort;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		777C2CDF27C2902E00656BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "monterayprod.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "PhotoSort (iOS)";
+			};
+			name = Debug;
+		};
+		777C2CE027C2902E00656BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "monterayprod.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "PhotoSort (iOS)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		777C2CE227C2902E00656BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "monterayprod.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "PhotoSort (macOS)";
+			};
+			name = Debug;
+		};
+		777C2CE327C2902E00656BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "monterayprod.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "PhotoSort (macOS)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		777C2CA627C2902900656BEC /* Build configuration list for PBXProject "PhotoSort" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C2CD627C2902E00656BEC /* Debug */,
+				777C2CD727C2902E00656BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		777C2CD827C2902E00656BEC /* Build configuration list for PBXNativeTarget "PhotoSort (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C2CD927C2902E00656BEC /* Debug */,
+				777C2CDA27C2902E00656BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		777C2CDB27C2902E00656BEC /* Build configuration list for PBXNativeTarget "PhotoSort (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C2CDC27C2902E00656BEC /* Debug */,
+				777C2CDD27C2902E00656BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		777C2CDE27C2902E00656BEC /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C2CDF27C2902E00656BEC /* Debug */,
+				777C2CE027C2902E00656BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		777C2CE127C2902E00656BEC /* Build configuration list for PBXNativeTarget "Tests macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C2CE227C2902E00656BEC /* Debug */,
+				777C2CE327C2902E00656BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 777C2CA327C2902900656BEC /* Project object */;
+}
