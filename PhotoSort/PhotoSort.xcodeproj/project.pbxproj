@@ -18,6 +18,7 @@
 		777C2CD427C2902E00656BEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 777C2CAA27C2902D00656BEC /* Assets.xcassets */; };
 		777C2CD527C2902E00656BEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 777C2CAA27C2902D00656BEC /* Assets.xcassets */; };
 		777C2CE527C2921700656BEC /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CE427C2921700656BEC /* PhotoLibrary.swift */; };
+		777C2CEF27C6BDD900656BEC /* PhotoSortUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C2CEE27C6BDD900656BEC /* PhotoSortUnitTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,13 @@
 			remoteGlobalIDString = 777C2CB427C2902D00656BEC;
 			remoteInfo = "PhotoSort (macOS)";
 		};
+		777C2CF027C6BDD900656BEC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 777C2CA327C2902900656BEC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 777C2CAE27C2902D00656BEC;
+			remoteInfo = "PhotoSort (iOS)";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +59,8 @@
 		777C2CCC27C2902E00656BEC /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		777C2CCE27C2902E00656BEC /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
 		777C2CE427C2921700656BEC /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
+		777C2CEC27C6BDD900656BEC /* PhotoSortUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoSortUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C2CEE27C6BDD900656BEC /* PhotoSortUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSortUnitTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +92,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		777C2CE927C6BDD900656BEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -92,6 +109,7 @@
 				777C2CB627C2902D00656BEC /* macOS */,
 				777C2CBF27C2902D00656BEC /* Tests iOS */,
 				777C2CCB27C2902E00656BEC /* Tests macOS */,
+				777C2CED27C6BDD900656BEC /* PhotoSortUnitTests */,
 				777C2CB027C2902D00656BEC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -114,6 +132,7 @@
 				777C2CB527C2902D00656BEC /* PhotoSort.app */,
 				777C2CBC27C2902D00656BEC /* Tests iOS.xctest */,
 				777C2CC827C2902E00656BEC /* Tests macOS.xctest */,
+				777C2CEC27C6BDD900656BEC /* PhotoSortUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,6 +161,14 @@
 				777C2CCE27C2902E00656BEC /* Tests_macOSLaunchTests.swift */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		777C2CED27C6BDD900656BEC /* PhotoSortUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				777C2CEE27C6BDD900656BEC /* PhotoSortUnitTests.swift */,
+			);
+			path = PhotoSortUnitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,6 +244,24 @@
 			productReference = 777C2CC827C2902E00656BEC /* Tests macOS.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		777C2CEB27C6BDD900656BEC /* PhotoSortUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777C2CF227C6BDD900656BEC /* Build configuration list for PBXNativeTarget "PhotoSortUnitTests" */;
+			buildPhases = (
+				777C2CE827C6BDD900656BEC /* Sources */,
+				777C2CE927C6BDD900656BEC /* Frameworks */,
+				777C2CEA27C6BDD900656BEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				777C2CF127C6BDD900656BEC /* PBXTargetDependency */,
+			);
+			name = PhotoSortUnitTests;
+			productName = PhotoSortUnitTests;
+			productReference = 777C2CEC27C6BDD900656BEC /* PhotoSortUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -241,6 +286,10 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 777C2CB427C2902D00656BEC;
 					};
+					777C2CEB27C6BDD900656BEC = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 777C2CAE27C2902D00656BEC;
+					};
 				};
 			};
 			buildConfigurationList = 777C2CA627C2902900656BEC /* Build configuration list for PBXProject "PhotoSort" */;
@@ -260,6 +309,7 @@
 				777C2CB427C2902D00656BEC /* PhotoSort (macOS) */,
 				777C2CBB27C2902D00656BEC /* Tests iOS */,
 				777C2CC727C2902E00656BEC /* Tests macOS */,
+				777C2CEB27C6BDD900656BEC /* PhotoSortUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -289,6 +339,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		777C2CC627C2902E00656BEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		777C2CEA27C6BDD900656BEC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -335,6 +392,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		777C2CE827C6BDD900656BEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C2CEF27C6BDD900656BEC /* PhotoSortUnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -347,6 +412,11 @@
 			isa = PBXTargetDependency;
 			target = 777C2CB427C2902D00656BEC /* PhotoSort (macOS) */;
 			targetProxy = 777C2CC927C2902E00656BEC /* PBXContainerItemProxy */;
+		};
+		777C2CF127C6BDD900656BEC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 777C2CAE27C2902D00656BEC /* PhotoSort (iOS) */;
+			targetProxy = 777C2CF027C6BDD900656BEC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -650,6 +720,45 @@
 			};
 			name = Release;
 		};
+		777C2CF327C6BDD900656BEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = monterayprod.PhotoSortUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSort.app/PhotoSort";
+			};
+			name = Debug;
+		};
+		777C2CF427C6BDD900656BEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = monterayprod.PhotoSortUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoSort.app/PhotoSort";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -694,6 +803,15 @@
 			buildConfigurations = (
 				777C2CE227C2902E00656BEC /* Debug */,
 				777C2CE327C2902E00656BEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		777C2CF227C6BDD900656BEC /* Build configuration list for PBXNativeTarget "PhotoSortUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C2CF327C6BDD900656BEC /* Debug */,
+				777C2CF427C6BDD900656BEC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

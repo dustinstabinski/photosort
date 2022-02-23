@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1E78F033-6CDE-488C-8807-E77A4F0169E4"
-            shouldBeEnabled = "Yes"
+            uuid = "C86A747B-594C-48C7-B858-9C50227C023F"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Shared/PhotoLibrary.swift"
+            filePath = "PhotoSortUnitTests/PhotoSortUnitTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "fillAlbums()"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "setUpWithError()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "205F6BFD-E8C1-4DA2-B154-701F254F6A5A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoSortUnitTests/PhotoSortUnitTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "setUpWithError()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
