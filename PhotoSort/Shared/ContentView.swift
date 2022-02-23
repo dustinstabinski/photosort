@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        let lib = PhotoLibrary();
-        Text(lib.photoAuthorization())
+        
+        Text("")
             .padding()
     }
 }
